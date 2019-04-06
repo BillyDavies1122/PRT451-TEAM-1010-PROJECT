@@ -43,6 +43,10 @@
     <Compile Include="Team1010BlockchainCV\wsgi.py" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BlockChainCv\templates\base.html" />
+    <Content Include="BlockChainCv\templates\registration\login.html" />
+    <Content Include="BlockChainCv\templates\registration\logged_out.html" />
+    <Content Include="BlockChainCv\templates\signup.html" />
     <Content Include="BlockChainCv\__pycache__\admin.cpython-36.pyc" />
     <Content Include="BlockChainCv\__pycache__\models.cpython-36.pyc" />
     <Content Include="BlockChainCv\__pycache__\views.cpython-36.pyc" />
@@ -57,6 +61,8 @@
   <ItemGroup>
     <Folder Include="BlockChainCv\" />
     <Folder Include="BlockChainCv\migrations\" />
+    <Folder Include="BlockChainCv\templates\" />
+    <Folder Include="BlockChainCv\templates\registration\" />
     <Folder Include="BlockChainCv\__pycache__\" />
     <Folder Include="obj\" />
     <Folder Include="obj\Debug\" />
