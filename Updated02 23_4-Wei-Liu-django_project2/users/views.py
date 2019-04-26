@@ -1,20 +1,39 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
+from blog.forms import *
+from blog.models import User
+from django.db.models import Q
 
 
 def register(request):
     if request.method == 'POST':
-        form = UserRegisterForm(request.POST)
+        form = registrationForm(request.POST)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
             messages.success(request, f'Your account has been created! You are now able to log in')
             return redirect('login')
     else:
-        form = UserRegisterForm()
-    return render(request, 'users/register.html', {'form': form})
+        form = registrationForm()
+    return render(request, 'register.html', {'form': form})
+
+
+def login(request):
+    if request.method =='POST':
+        form = loginForm(request.POST)
+        if form.is_valid():
+            data = request.POST.copy()
+            username = data.get('username')
+            password = data.get('password')
+            if User.objects.filter(Q(username=username)|Q(password=password)):
+                return render(request,'register.html')
+            else:
+                form = loginForm()
+    else:
+        form = loginForm()
+    return render(request,'login.html',{'form':form})
+
 
 
 @login_required
@@ -39,4 +58,7 @@ def profile(request):
         'p_form': p_form
     }
 
-    return render(request, 'users/profile.html', context)
+    return render(request, 'profile.html', context)
+
+def logout(request):
+    return render(request,'logout.html')
