@@ -5,7 +5,12 @@ from blog.forms import *
 from blog.models import User
 from django.db.models import Q
 
-
+'''
+Function lets a user register
+Simply checks if the form is valid to the model in the blog folder
+then saves it
+if its a get request then it sends back the correct form to fill in
+'''
 def register(request):
     if request.method == 'POST':
         form = registrationForm(request.POST)
@@ -18,7 +23,14 @@ def register(request):
         form = registrationForm()
     return render(request, 'register.html', {'form': form})
 
+'''
+Function for the login system
+returns a form if its a Get request
+Otherwise it will check that the username and password are correct
+Uses the Q module to perform checks on the data
+Still needs to redirect to the correct page(employee,employer,education) on correct login
 
+'''
 def login(request):
     if request.method =='POST':
         form = loginForm(request.POST)
@@ -27,7 +39,7 @@ def login(request):
             username = data.get('username')
             password = data.get('password')
             if User.objects.filter(Q(username=username)|Q(password=password)):
-                return render(request,'register.html')
+                return render(request,'employee.html')
             else:
                 form = loginForm()
     else:
