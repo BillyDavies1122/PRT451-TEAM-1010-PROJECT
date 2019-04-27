@@ -1,0 +1,22 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\blog",
+    "\\blog\\templates",
+    "\\blog\\templates\\blog",
+    "\\django_project",
+    "\\users",
+    "\\venv",
+    "\\venv\\Lib",
+    "\\venv\\Lib\\site-packages",
+    "\\venv\\Lib\\site-packages\\django",
+    "\\venv\\Lib\\site-packages\\django\\contrib",
+    "\\venv\\Lib\\site-packages\\django\\contrib\\admin",
+    "\\venv\\Lib\\site-packages\\django\\contrib\\admin\\templates",
+    "\\venv\\Lib\\site-packages\\django\\contrib\\admin\\templates\\admin",
+    "\\venv\\Lib\\site-packages\\django\\contrib\\auth",
+    "\\venv\\Lib\\site-packages\\django\\test"
+  ],
+  "SelectedNode": "\\users\\templates\\users",
+  "PreviewInSolutionExplorer": false
+}
