@@ -55,7 +55,11 @@ def login(request):
         form = loginForm()
     return render(request,'login.html',{'form':form})
 
-
+'''
+This view logs the user out
+deletes session data
+then redirects them to a page telling them they logged out
+'''
 def logout(request):
     #mark session as modified so it can be deleted
     request.session.modified = True
