@@ -6,17 +6,8 @@
     "\\blog\\templates\\blog",
     "\\django_project",
     "\\users",
-    "\\venv",
-    "\\venv\\Lib",
-    "\\venv\\Lib\\site-packages",
-    "\\venv\\Lib\\site-packages\\django",
-    "\\venv\\Lib\\site-packages\\django\\contrib",
-    "\\venv\\Lib\\site-packages\\django\\contrib\\admin",
-    "\\venv\\Lib\\site-packages\\django\\contrib\\admin\\templates",
-    "\\venv\\Lib\\site-packages\\django\\contrib\\admin\\templates\\admin",
-    "\\venv\\Lib\\site-packages\\django\\contrib\\auth",
-    "\\venv\\Lib\\site-packages\\django\\test"
+    "\\users\\templates"
   ],
-  "SelectedNode": "\\users\\templates\\users",
+  "SelectedNode": "\\django_project\\urls.py",
   "PreviewInSolutionExplorer": false
 }

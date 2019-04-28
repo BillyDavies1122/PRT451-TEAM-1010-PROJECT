@@ -10,6 +10,7 @@ Function lets a user register
 Simply checks if the form is valid to the model in the blog folder
 then saves it
 if its a get request then it sends back the correct form to fill in
+check forms.py for the registration form
 '''
 def register(request):
     if request.method == 'POST':
@@ -29,7 +30,7 @@ returns a form if its a Get request
 Otherwise it will check that the username and password are correct
 Uses the Q module to perform checks on the data
 Still needs to redirect to the correct page(employee,employer,education) on correct login
-
+Check forms.py for the login form
 '''
 def login(request):
     if request.method =='POST':
@@ -71,6 +72,28 @@ def logout(request):
         pass
     #send them to the logout page
     return render(request,'logout.html')
+
+
+'''
+NOT FINISHED
+Will allow a user to search for candidates with first name and last name
+Check forms.py for the form they search with
+'''
+def search(request):
+    if request.method =='POST':
+        form = searchForm(request.POST)
+        if form.is_valid():
+            data = request.POST.copy()
+            fname = data.get('fname')
+            sname = data.get('sname')
+    else:
+        form = searchForm()
+        return render(request,'search.html',{'form':form})
+
+def displayCandidate(request):
+    users = User.objects.all()
+    args = {'users':users}
+    return render(request,'search.html',args)
 
 
 '''

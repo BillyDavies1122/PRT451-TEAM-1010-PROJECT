@@ -26,6 +26,7 @@ urlpatterns = [
     path('blog', include('blog.urls')),
     path('', user_views.login, name="login"),
     path('logout/',user_views.logout,name='logout'),
+    path('search',user_views.displayCandidate,name='search'),
 
 ]
 if settings.DEBUG:

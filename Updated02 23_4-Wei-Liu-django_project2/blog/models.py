@@ -23,5 +23,5 @@ class User(models.Model):
     roleOfUser = models.CharField(max_length=9)
     
     def __str__(self):
-        return '{} with the id {}'.format(self.username,self.id)
+        return 'Username is {} '.format(self.username)
     

@@ -12,3 +12,7 @@ class registrationForm(ModelForm):
 class loginForm(forms.Form):
         username = forms.CharField(label = 'username')
         password = forms.CharField(label = 'password')
+
+class searchForm(forms.Form):
+    fname = forms.CharField(label = 'fname')
+    sname = forms.CharField(label = 'sname')
