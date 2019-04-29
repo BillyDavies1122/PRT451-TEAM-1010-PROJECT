@@ -84,11 +84,19 @@ def search(request):
         form = searchForm(request.POST)
         if form.is_valid():
             data = request.POST.copy()
-            fname = data.get('fname')
-            sname = data.get('sname')
+            fname = data.get('fname').lower()
+            sname = data.get('sname').lower()
+            if User.objects.filter(Q(fname=fname)&Q(sname=sname)):
+                users = User.objects.filter(Q(fname=fname)&Q(sname=sname))
+                args = {'users':users}
+                return render(request,'users/search.html',args)
+            else:
+                form = searchForm()
     else:
         form = searchForm()
-        return render(request,'users/search.html',{'form':form})
+        users = User.objects.all()
+        args = {'users':users}
+    return render(request,'users/search.html',{'form':form})
 
 def displayCandidate(request):
     users = User.objects.all()
