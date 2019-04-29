@@ -1,5 +1,4 @@
 from django.forms import *
-from django import forms
 from .models import *
 
 
@@ -7,11 +6,15 @@ class registrationForm(ModelForm):
     class Meta:
         model=User
         fields = ['username','fname','sname','password','dateOfBirth','roleOfUser']
+        widgets = {
+            'password':forms.PasswordInput(),
+            }
+
 
 
 class loginForm(forms.Form):
         username = forms.CharField(label = 'username')
-        password = forms.CharField(label = 'password')
+        password = forms.CharField(label = 'password',widget=forms.PasswordInput())
 
 class searchForm(forms.Form):
     fname = forms.CharField(label = 'fname')
