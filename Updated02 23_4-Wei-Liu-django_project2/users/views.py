@@ -45,16 +45,16 @@ def login(request):
                 request.session['type'] = login.roleOfUser
                 #Now check the role of user to decide on which page they can view
                 if login.roleOfUser.lower() == 'candidate':
-                    return render(request,'employee.html')
+                    return render(request,'users/employee.html')
                 elif login.roleOfUser.lower() == 'employer':
-                    return render(request,'employer.html')
+                    return render(request,'users/employer.html')
                 elif login.roleOfUser.lower() == 'education':
-                    return render(request,'education.html')
+                    return render(request,'users/education.html')
             else:
                 form = loginForm()
     else:
         form = loginForm()
-    return render(request,'login.html',{'form':form})
+    return render(request,'users/login.html',{'form':form})
 
 '''
 This view logs the user out
@@ -71,7 +71,7 @@ def logout(request):
     except KeyError:
         pass
     #send them to the logout page
-    return render(request,'logout.html')
+    return render(request,'users/logout.html')
 
 
 '''
@@ -88,12 +88,12 @@ def search(request):
             sname = data.get('sname')
     else:
         form = searchForm()
-        return render(request,'search.html',{'form':form})
+        return render(request,'users/search.html',{'form':form})
 
 def displayCandidate(request):
     users = User.objects.all()
     args = {'users':users}
-    return render(request,'search.html',args)
+    return render(request,'users/search.html',args)
 
 
 '''
