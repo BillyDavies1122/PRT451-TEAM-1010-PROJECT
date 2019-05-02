@@ -1,0 +1,14 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="content-section">
+    <h1>Select which user you are.</h1>
+    <button class="btn btn-outline-info" type="submit"><a href="{% url 'register' %}">Candidate</a></button>
+    <button class="btn btn-outline-info" type="submit"><a>Education or Employer</a></button>
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            Already Have An Account? <a class="ml-2" href="{% url 'login' %}">Sign In</a>
+        </small>
+    </div>
+</div>
+{% endblock content %}

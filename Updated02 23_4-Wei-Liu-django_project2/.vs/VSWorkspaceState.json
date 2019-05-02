@@ -3,11 +3,11 @@
     "",
     "\\blog",
     "\\blog\\templates",
-    "\\blog\\templates\\blog",
     "\\django_project",
     "\\users",
-    "\\users\\templates"
+    "\\users\\templates",
+    "\\users\\templates\\users"
   ],
-  "SelectedNode": "\\blog\\forms.py",
+  "SelectedNode": "\\users\\views.py",
   "PreviewInSolutionExplorer": false
 }

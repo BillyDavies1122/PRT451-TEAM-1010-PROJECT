@@ -3,57 +3,7 @@
 {% block content %}
 
 <div class="container">
-    <div class="row">
-        <div class="col-sm-3 col-md-3">
-            <div class="panel-group" id="accordion">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                                <span class="glyphicon glyphicon-folder-close">
-                                </span>Overview
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapseOne" class="panel-collapse collapse in">
-                        <div class="panel-body">
-                            <table class="table">
-
-                                <tr>
-                                    <td>
-                                        <span class="glyphicon glyphicon-pencil text-primary"></span><a href="http://www.jquery2dotnet.com">Search for candidates</a>
-                                    </td>
-                                </tr>
-
-
-
-                                <tr>
-                                    <td>
-                                        <span class="glyphicon glyphicon-file text-info"></span><a href="http://www.jquery2dotnet.com">Account Setting</a>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        <span class="glyphicon glyphicon-comment text-success"></span><a href="{% url 'blog-confirmation' %}">Confirmation</a>
-                                        <span class="badge">42</span>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        <span class="glyphicon glyphicon-comment text-success"></span><a href="{% url 'logout' %}">Logout</a>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
+    {% include 'users/menu.html' %}
     <div class="content-section">
         <h1>This is the employer page</h1>
         <div class="border-top pt-3">

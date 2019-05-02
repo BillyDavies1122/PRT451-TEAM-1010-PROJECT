@@ -15,8 +15,8 @@
     </form>
     <ul>
         {% for user in users %}
-        <p>Result below</p>
-        <li><h2>{{ user.fname }} {{user.sname}} Born on {{user.dateOfBirth}}</h2></li>
+        <h1>Results below</h1>
+        <li><h3>{{ user.fname|title }} {{user.sname|title}} Born on {{user.dateOfBirth}} Medicare number is {{user.medicare}}</h3></li>
         {% endfor %}
     </ul>
 </div>

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from blog.forms import *
-from blog.models import User
+from blog.models import User ,employer_education
 from django.db.models import Q
 
 '''
@@ -39,7 +39,7 @@ def login(request):
             data = request.POST.copy()
             username = data.get('username')
             password = data.get('password')
-            if User.objects.filter(Q(username=username)&Q(password=password)):
+            if (User.objects.filter(Q(username=username)&Q(password=password))):
                 login = User.objects.get(username=username)
                 request.session['id'] = login.id
                 request.session['type'] = login.roleOfUser
@@ -47,6 +47,15 @@ def login(request):
                 if login.roleOfUser.lower() == 'candidate':
                     return render(request,'users/employee.html')
                 elif login.roleOfUser.lower() == 'employer':
+                    return render(request,'users/employer.html')
+                elif login.roleOfUser.lower() == 'education':
+                    return render(request,'users/education.html')
+            elif employer_education.objects.filter(Q(username=username)&Q(password=password)):
+                login = employer_education.objects.get(username=username)
+                request.session['id'] = login.id
+                request.session['type'] = login.roleOfUser
+                #Now check the role of user to decide on which page they can view
+                if login.roleOfUser.lower() == 'employer':
                     return render(request,'users/employer.html')
                 elif login.roleOfUser.lower() == 'education':
                     return render(request,'users/education.html')
@@ -75,9 +84,9 @@ def logout(request):
 
 
 '''
-NOT FINISHED
 Will allow a user to search for candidates with first name and last name
 Check forms.py for the form they search with
+
 '''
 def search(request):
     if request.method =='POST':
@@ -94,8 +103,6 @@ def search(request):
                 form = searchForm()
     else:
         form = searchForm()
-        users = User.objects.all()
-        args = {'users':users}
     return render(request,'users/search.html',{'form':form})
 
 def displayCandidate(request):

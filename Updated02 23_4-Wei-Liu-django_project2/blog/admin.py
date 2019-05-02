@@ -4,5 +4,6 @@ from .models import *
 #password administrator
 
 
-admin.site.register(Post)
+#admin.site.register(Post)
 admin.site.register(User)
+admin.site.register(employer_education)

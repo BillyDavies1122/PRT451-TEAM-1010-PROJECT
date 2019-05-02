@@ -2,10 +2,11 @@ from django.forms import *
 from .models import *
 
 
+
 class registrationForm(ModelForm):
     class Meta:
         model=User
-        fields = ['username','fname','sname','password','dateOfBirth','roleOfUser']
+        fields = ['username','fname','sname','password','dateOfBirth','roleOfUser','medicare']
         widgets = {
             'password':forms.PasswordInput(),
             }
