@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect , HttpResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from blog.forms import *
@@ -19,7 +19,6 @@ def register(request):
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
-            messages.success(request, f'Your account has been created! You are now able to log in')
             return redirect('login')
     else:
         form = registrationForm()
@@ -106,10 +105,38 @@ def search(request):
         form = searchForm()
     return render(request,'users/search.html',{'form':form})
 
-def displayCandidate(request):
-    users = User.objects.all()
-    args = {'users':users}
-    return render(request,'users/search.html',args)
+def displayCandidate(request,id):
+    if request.method =='POST':
+        form = dataForm(request.POST)
+        if form.is_valid():
+            form.save()
+            form = searchForm()
+            return redirect('search')
+    else:
+        user = User.objects.filter(id = id)
+        loggedIn = request.session['id']
+        form = dataForm(initial={'idOfCandidate': id,'idOfEmployer':loggedIn})
+        args = {'user':user,'form':form}
+        return render(request,'users/selection.html',args)
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 '''

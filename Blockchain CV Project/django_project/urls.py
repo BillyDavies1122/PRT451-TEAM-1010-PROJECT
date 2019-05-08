@@ -28,6 +28,9 @@ urlpatterns = [
     path('logout/',user_views.logout,name='logout'),
     path('search',user_views.search,name='search'),
 
+    path('candidate/<int:id>',user_views.displayCandidate,name='displayCandidate'),
+
+
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

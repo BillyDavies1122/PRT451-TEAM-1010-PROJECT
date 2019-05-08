@@ -1,0 +1,24 @@
+{% extends 'users/education.html' %}
+{% load crispy_forms_tags %}
+{% block data %}
+<div class="displayAll">
+    {% for user in user %}
+    <h1>User Details</h1>
+    <h2>Users name: {{ user.fname|title }} {{user.sname|title}}</h2>
+    <h2>Date of birth: {{user.dateOfBirth}}</h2>
+    <h2>Medicare Number: {{user.medicare}}</h2>
+    {% endfor %}
+    <div>
+        <h2>Enter data for candidate</h2>
+        <form method="POST">
+            {% csrf_token %}
+            {% for form in form %}
+            {{form}}
+            {% endfor %}
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock data %}

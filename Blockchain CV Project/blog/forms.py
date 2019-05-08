@@ -20,3 +20,14 @@ class loginForm(forms.Form):
 class searchForm(forms.Form):
     fname = forms.CharField(label = 'fname')
     sname = forms.CharField(label = 'sname')
+
+
+class dataForm(ModelForm):
+    class Meta:
+        model=dataEntry
+        fields =['entry','idOfCandidate','idOfEmployer']
+        widgets = {
+            'entry':forms.Textarea,
+            'idOfCandidate':forms.HiddenInput,
+            'idOfEmployer':forms.HiddenInput,
+            }

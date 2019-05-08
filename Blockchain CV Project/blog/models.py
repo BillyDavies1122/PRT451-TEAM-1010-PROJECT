@@ -23,7 +23,7 @@ class User(models.Model):
     medicare = models.DecimalField(max_digits=10,decimal_places=0)
     #String representation of the model
     def __str__(self):
-        return 'Username is {}, with Medicare number {} '.format(self.username,self.medicare)
+        return 'Username is {}, with Medicare number {} id is {}'.format(self.username,self.medicare,self.id)
 
     #Makes sure these three fields are saved in lower case by overwriting the save method
     def save(self, *args, **kwargs):
@@ -31,6 +31,7 @@ class User(models.Model):
         self.sname = self.sname.lower()
         self.roleOfUser= self.roleOfUser.lower()
         return super(User, self).save(*args, **kwargs)
+
 
 
 #Not used yet, potentially used to represent the non candidate roles
@@ -44,13 +45,21 @@ class employer_education(models.Model):
     ABN = models.DecimalField(max_digits=11,decimal_places=0)
     #string representation of the model
     def  __str__(self):
-        return 'Username is {} Abn is {}'.format(self.username,self.ABN)
+        return 'Username is {} Abn is {} id is {}'.format(self.username,self.ABN,self.id)
 
     def save(self, *args, **kwargs):
         self.fname = self.fname.lower()
         self.sname = self.sname.lower()
         self.roleOfUser= self.roleOfUser.lower()
         return super(employer_education, self).save(*args, **kwargs)
+
+class dataEntry(models.Model):
+    entry = models.TextField()
+    idOfCandidate = models.DecimalField(max_digits=10000,decimal_places=0)
+    idOfEmployer = models.DecimalField(max_digits=10000,decimal_places=0)
+
+    def __str__(self):
+        return '{}'.format(self.entry)
 
 
 
