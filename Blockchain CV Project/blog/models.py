@@ -10,7 +10,7 @@ from django import forms
 #look in forms.py to change the form used to register a user with this model
 
 RoleChoices = (('1','Candidate'),
-               ('2','Employee'),
+               ('2','Employer'),
                ('3','Education'))
 
 class User(models.Model):
