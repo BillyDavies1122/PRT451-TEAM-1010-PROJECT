@@ -33,7 +33,6 @@ Still needs to redirect to the correct page(employee,employer,education) on corr
 Check forms.py for the login form
 '''
 def login(request):
-    
     if request.method =='POST':
         form = loginForm(request.POST)
         if form.is_valid():
@@ -56,9 +55,9 @@ def login(request):
                 request.session['id'] = login.id
                 request.session['type'] = login.roleOfUser
                 #Now check the role of user to decide on which page they can view
-                if login.roleOfUser.lower() == '2':#redirect to employer
+                if login.roleOfUser.lower() == 'employer':#redirect to employer
                     return render(request,'users/employer.html')
-                elif login.roleOfUser.lower() == '3':#redirect to education
+                elif login.roleOfUser.lower() == 'education':#redirect to education
                     return render(request,'users/education.html')
         
             else:
