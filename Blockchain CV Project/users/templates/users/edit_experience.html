@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-<div class="row">
+    <div class="row">
     <div class="col-sm-3 col-md-3">
         <div class="panel-group" id="accordion">
             <div class="panel panel-default">
@@ -32,11 +32,11 @@
                                 </td>
                             </tr>
 
-                            <tr>
-                                <td>
-                                    <span class="glyphicon glyphicon-comment text-success"></span><a href="{% url 'blog-confirmation' %}">Confirmations</a>
-                                </td>
-                            </tr>
+{#                            <tr>#}
+{#                                <td>#}
+{#                                    <span class="glyphicon glyphicon-comment text-success"></span><a href="{% url 'blog-confirmation' %}">Confirmations</a>#}
+{#                                </td>#}
+{#                            </tr>#}
 
                             <tr>
                                 <td>
@@ -50,4 +50,16 @@
         </div>
     </div>
 </div>
+{# <li><h3>{{ user.fname }} {{user.sname}}, Medicare number is {{user.medicare}}</h3></li>#}
+        <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Edit experience</legend>
+                {{ form|crispy }}
+                        <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Save</button>
+            </div>
+            </fieldset>
+
     {% endblock content %}

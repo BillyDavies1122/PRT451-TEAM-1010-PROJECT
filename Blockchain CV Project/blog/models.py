@@ -74,3 +74,19 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 '''
+# model of work experience
+class employer_experience(models.Model):
+    # username = models.CharField(unique=True,max_length=50)
+    fname= models.CharField(max_length=50)
+    sname = models.CharField(max_length=50)
+    stime = models.DateTimeField(default=timezone.now)
+    ltime = models.DateTimeField(default=timezone.now)
+    company = models.CharField(max_length=50)
+    contribution = models.CharField(max_length=50)
+    comment_box = models.CharField(max_length=50)
+    # medicare = models.CharField(max_length=50)
+    # roleOfUser = models.CharField(max_length=50,choices=RoleChoices)
+    # medicare = models.DecimalField(max_digits=10,decimal_places=0)
+    #String representation of the model
+    def __str__(self):
+        return '{}'.format(self.company)

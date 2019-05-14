@@ -26,3 +26,6 @@ def work_review(request):
 def education_review(request):
     # return HttpResponse('<h1> confirmation </h1>')
     return render(request, 'blog/education_review.html', {'title': 'education_review'})
+
+# def edit_experience(request):
+#     return render(request, 'blog/../users/templates/users/edit_experience.html')

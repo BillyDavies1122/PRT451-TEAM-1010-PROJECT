@@ -168,3 +168,14 @@ def profile(request):
 
     return render(request, 'profile.html', context)
 '''
+# edit_experience funtion
+def edit_experience(request):
+    if request.method == 'POST':
+        form = experienceForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            return redirect('edit_experience')
+    else:
+        form = experienceForm()
+    return render(request, 'users/edit_experience.html', {'form': form})

@@ -27,6 +27,8 @@ urlpatterns = [
     path('', user_views.login, name="login"),
     path('logout/',user_views.logout,name='logout'),
     path('search',user_views.search,name='search'),
+    path('edit_experience', user_views.edit_experience, name='edit_experience'),
+    # path('employer', user_views.employer, name='employer'),
 
     path('candidate/<int:id>',user_views.displayCandidate,name='displayCandidate'),
 
