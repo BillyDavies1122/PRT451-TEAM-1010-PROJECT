@@ -2,54 +2,54 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-    <div class="row">
-    <div class="col-sm-3 col-md-3">
-        <div class="panel-group" id="accordion">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                            <span class="glyphicon glyphicon-folder-close">
-                            </span>Overview
-                        </a>
-                    </h4>
-                </div>
-                <div id="collapseOne" class="panel-collapse collapse in">
-                    <div class="panel-body">
-                        <table class="table">
+    <!--<div class="row">-->
+    <!--<div class="col-sm-3 col-md-3">-->
+        <!--<div class="panel-group" id="accordion">-->
+            <!--<div class="panel panel-default">-->
+                <!--<div class="panel-heading">-->
+                    <!--<h4 class="panel-title">-->
+                        <!--<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">-->
+                            <!--<span class="glyphicon glyphicon-folder-close">-->
+                            <!--</span>Overview-->
+                        <!--</a>-->
+                    <!--</h4>-->
+                <!--</div>-->
+                <!--<div id="collapseOne" class="panel-collapse collapse in">-->
+                    <!--<div class="panel-body">-->
+                        <!--<table class="table">-->
 
-                            <tr>
-                                <td>
-                                    <span class="glyphicon glyphicon-pencil text-primary"></span><a href="{% url 'search' %}">Search for candidates</a>
-                                </td>
-                            </tr>
+                            <!--<tr>-->
+                                <!--<td>-->
+                                    <!--<span class="glyphicon glyphicon-pencil text-primary"></span><a href="{% url 'search' %}">Search for candidates</a>-->
+                                <!--</td>-->
+                            <!--</tr>-->
 
 
 
-                            <tr>
-                                <td>
-                                    <span class="glyphicon glyphicon-file text-info"></span><a href="{% url 'edit_experience' %}">Edit experience</a>
-                                </td>
-                            </tr>
+                            <!--<tr>-->
+                                <!--<td>-->
+                                    <!--<span class="glyphicon glyphicon-file text-info"></span><a href="{% url 'edit_experience' %}">Edit experience</a>-->
+                                <!--</td>-->
+                            <!--</tr>-->
 
-{#                            <tr>#}
-{#                                <td>#}
-{#                                    <span class="glyphicon glyphicon-comment text-success"></span><a href="{% url 'blog-confirmation' %}">Confirmations</a>#}
-{#                                </td>#}
-{#                            </tr>#}
+<!--{#                            <tr>#}-->
+<!--{#                                <td>#}-->
+<!--{#                                    <span class="glyphicon glyphicon-comment text-success"></span><a href="{% url 'blog-confirmation' %}">Confirmations</a>#}-->
+<!--{#                                </td>#}-->
+<!--{#                            </tr>#}-->
 
-                            <tr>
-                                <td>
-                                    <span class="glyphicon glyphicon-comment text-success"></span><a href="{% url 'logout' %}">Logout</a>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+                            <!--<tr>-->
+                                <!--<td>-->
+                                    <!--<span class="glyphicon glyphicon-comment text-success"></span><a href="{% url 'logout' %}">Logout</a>-->
+                                <!--</td>-->
+                            <!--</tr>-->
+                        <!--</table>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
 {# <li><h3>{{ user.fname }} {{user.sname}}, Medicare number is {{user.medicare}}</h3></li>#}
         <div class="content-section">
         <form method="POST">
@@ -59,6 +59,7 @@
                 {{ form|crispy }}
                         <div class="form-group">
                 <button class="btn btn-outline-info" type="submit">Save</button>
+                            <button class="btn btn-outline-info"    href="{% url 'blog-employee' %}">Back</button>
             </div>
             </fieldset>
 

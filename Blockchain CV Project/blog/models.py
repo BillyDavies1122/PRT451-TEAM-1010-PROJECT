@@ -68,17 +68,15 @@ class dataEntry(models.Model):
 # model of work experience
 class employer_experience(models.Model):
     # username = models.CharField(unique=True,max_length=50)
-    fname = models.CharField(max_length=50)
-    sname = models.CharField(max_length=50)
-    stime = models.DateTimeField(default=timezone.now)
-    ltime = models.DateTimeField(default=timezone.now)
-    company = models.CharField(max_length=50)
-    contribution = models.CharField(max_length=50)
+    email = models.CharField(max_length=50)
+    address = models.CharField(max_length=50)
+    gender = models.CharField(max_length=50)
+    phone_number = models.CharField(max_length=50)
     comment_box = models.CharField(max_length=50)
 
 
     #String representation of the model
     def __str__(self):
-        return '{}'.format(self.company)
+        return '{}'.format(self.phone_number)
 
 
