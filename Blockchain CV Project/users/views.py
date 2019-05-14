@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect , HttpResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from blog.forms import *
-from blog.models import User ,employer_education
+from blog.models import *
 from django.db.models import Q
 from blog import views
 
@@ -121,7 +121,18 @@ def displayCandidate(request,id):
         return render(request,'users/selection.html',args)
 
 
-
+# edit_experience funtion
+def edit_experience(request):
+    if request.method == 'POST':
+        form = experienceForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            return redirect('edit_experience')
+    else:
+        form = experienceForm()
+        args = {'form':form}
+    return render(request, 'users/edit_experience.html', {'form':form})
 
     
 
@@ -167,14 +178,3 @@ def profile(request):
 
     return render(request, 'profile.html', context)
 '''
-# edit_experience funtion
-def edit_experience(request):
-    if request.method == 'POST':
-        form = experienceForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            return redirect('edit_experience')
-    else:
-        form = experienceForm()
-    return render(request, 'users/edit_experience.html', {'form': form})

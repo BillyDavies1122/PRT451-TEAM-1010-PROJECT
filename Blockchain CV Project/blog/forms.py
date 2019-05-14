@@ -31,11 +31,10 @@ class dataForm(ModelForm):
             'idOfCandidate':forms.HiddenInput,
             'idOfEmployer':forms.HiddenInput,
             }
-
-
+'''
 class experienceForm(ModelForm):
     class Meta:
         model=employer_experience
         fields = ['fname','sname','stime','ltime','company','contribution','comment_box']
-
+'''
 

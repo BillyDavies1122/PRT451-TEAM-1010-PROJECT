@@ -5,7 +5,6 @@ from django import forms
 
 
 
-
 #Created a model to represent a user , role of user is used to specify if they are a candiate , education or employer
 #look in forms.py to change the form used to register a user with this model
 
@@ -53,6 +52,8 @@ class employer_education(models.Model):
         self.roleOfUser= self.roleOfUser.lower()
         return super(employer_education, self).save(*args, **kwargs)
 
+
+
 class dataEntry(models.Model):
     entry = models.TextField()
     idOfCandidate = models.DecimalField(max_digits=10000,decimal_places=0)
@@ -64,29 +65,20 @@ class dataEntry(models.Model):
 
 
 
-'''
-class Post(models.Model):
-    title = models.CharField(max_length=100)
-    content = models.TextField()
-    date_posted = models.DateTimeField(default=timezone.now)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.title
-'''
 # model of work experience
 class employer_experience(models.Model):
     # username = models.CharField(unique=True,max_length=50)
-    fname= models.CharField(max_length=50)
+    fname = models.CharField(max_length=50)
     sname = models.CharField(max_length=50)
     stime = models.DateTimeField(default=timezone.now)
     ltime = models.DateTimeField(default=timezone.now)
     company = models.CharField(max_length=50)
     contribution = models.CharField(max_length=50)
     comment_box = models.CharField(max_length=50)
-    # medicare = models.CharField(max_length=50)
-    # roleOfUser = models.CharField(max_length=50,choices=RoleChoices)
-    # medicare = models.DecimalField(max_digits=10,decimal_places=0)
+
+
     #String representation of the model
     def __str__(self):
         return '{}'.format(self.company)
+
+
