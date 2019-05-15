@@ -81,6 +81,6 @@ class employer_experience(models.Model):
 
     #String representation of the model
     def __str__(self):
-        return '{},{}'.format(self.id,self.phone_number)
+        return 'id:{},Name:{} {} address:{}'.format(self.user.id,self.user.fname,self.user.sname,self.address)
 
 

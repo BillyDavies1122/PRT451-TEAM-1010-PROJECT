@@ -115,7 +115,7 @@ def displayCandidate(request,id):
             return redirect('search')
     else:
         user = User.objects.filter(id = id)
-        employer=employer_experience.objects.filter(email)
+        employer= employer_experience.objects.filter(user_id = id)
         loggedIn = request.session['id']
         form = dataForm(initial={'idOfCandidate': id,'idOfEmployer':loggedIn})
         args = {'user':user,'form':form,'employer_experience':employer}

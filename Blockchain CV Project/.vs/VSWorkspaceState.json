@@ -2,10 +2,12 @@
   "ExpandedNodes": [
     "",
     "\\blog",
+    "\\blog\\templates\\blog",
+    "\\django_project",
     "\\users",
     "\\users\\templates",
     "\\users\\templates\\users"
   ],
-  "SelectedNode": "\\users\\admin.py",
+  "SelectedNode": "\\blog\\models.py",
   "PreviewInSolutionExplorer": false
 }
