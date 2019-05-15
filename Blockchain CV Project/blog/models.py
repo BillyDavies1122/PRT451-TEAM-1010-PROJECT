@@ -67,6 +67,10 @@ class dataEntry(models.Model):
 
 # model of work experience
 class employer_experience(models.Model):
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        primary_key=True,)
     # username = models.CharField(unique=True,max_length=50)
     email = models.CharField(max_length=50)
     address = models.CharField(max_length=50)
@@ -77,6 +81,6 @@ class employer_experience(models.Model):
 
     #String representation of the model
     def __str__(self):
-        return '{}'.format(self.phone_number)
+        return '{},{}'.format(self.id,self.phone_number)
 
 

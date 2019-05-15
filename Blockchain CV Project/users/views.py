@@ -115,9 +115,10 @@ def displayCandidate(request,id):
             return redirect('search')
     else:
         user = User.objects.filter(id = id)
+        employer=employer_experience.objects.filter(email)
         loggedIn = request.session['id']
         form = dataForm(initial={'idOfCandidate': id,'idOfEmployer':loggedIn})
-        args = {'user':user,'form':form}
+        args = {'user':user,'form':form,'employer_experience':employer}
         return render(request,'users/selection.html',args)
 
 
@@ -131,8 +132,10 @@ def edit_experience(request):
             # return redirect('edit_experience')
             return render(request, 'users/employee.html')
     else:
+        # # user = User.objects.filter(id=id)
         form = experienceForm()
-        args = {'form':form}
+        # # args = {'user': user, 'form': form}
+        # args = {'form':form}
     return render(request, 'users/edit_experience.html', {'form':form})
 
     
