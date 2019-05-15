@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect , HttpResponse
+from django.shortcuts import render, redirect , HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from blog.forms import *
@@ -115,7 +115,7 @@ def displayCandidate(request,id):
             return redirect('search')
     else:
         user = User.objects.filter(id = id)
-        employer= employer_experience.objects.filter(user_id = id)
+        employer= employer_experience.objects.filter(user_id = request.session['id'])
         loggedIn = request.session['id']
         form = dataForm(initial={'idOfCandidate': id,'idOfEmployer':loggedIn})
         args = {'user':user,'form':form,'employer_experience':employer}
@@ -138,7 +138,23 @@ def edit_experience(request):
         # args = {'form':form}
     return render(request, 'users/edit_experience.html', {'form':form})
 
+
+
+def confirmation(request ,id=None):
+    if id != None:
+        deleteEntry(id)
+        #return HttpResponseRedirect("")
+        return redirect('confirmation')
+    else:
+        loggedInId = request.session['id']
+        userConfirmations = dataEntry.objects.filter(idOfCandidate = loggedInId)
+        args = {'item':userConfirmations}
+        return render(request,"users/confirmations.html",args)
+
     
+
+def deleteEntry(id):
+    dataEntry.objects.filter(id = id).delete()
 
 
 

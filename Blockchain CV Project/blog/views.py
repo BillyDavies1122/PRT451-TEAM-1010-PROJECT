@@ -17,9 +17,7 @@ def employer(request):
 def education(request):
     return render(request, 'blog/education.html')
 
-def confirmation(request):
-    # return HttpResponse('<h1> confirmation </h1>')
-    return render(request, 'blog/confirmation.html')
+
 def work_review(request):
     # return HttpResponse('<h1> confirmation </h1>')
     return render(request, 'blog/work_review.html', {'title': 'work_review'})

@@ -1,0 +1,23 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container">
+    {% include 'users/menu.html' %}
+    <div class="content-section">
+        <h1>Pending requests below</h1>
+        {% for item in item %}
+        <div id="confirmation>">
+            <h3>{{item.entry}}</h3>
+            <div id="buttons">
+                    <button class="btn btn-outline-info" type="submit" > Accept</button>
+                    <button class="btn btn-outline-info" type="submit" method="POST"><a href="/confirmation/{{item.id}}"> Discard </a></button>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="border-top pt-3">
+            <small class="text-muted">
+            </small>
+        </div>
+    </div>
+    {% endblock content %}
