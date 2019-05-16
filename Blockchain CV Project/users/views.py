@@ -115,7 +115,7 @@ def displayCandidate(request,id):
             return redirect('search')
     else:
         user = User.objects.filter(id = id)
-        employer= employer_experience.objects.filter(user_id = request.session['id'])
+        employer = employer_experience.objects.filter(user_id = id)
         loggedIn = request.session['id']
         form = dataForm(initial={'idOfCandidate': id,'idOfEmployer':loggedIn})
         args = {'user':user,'form':form,'employer_experience':employer}
@@ -127,6 +127,7 @@ def edit_experience(request):
     if request.method == 'POST':
         form = experienceForm(request.POST)
         if form.is_valid():
+
             form.save()
             # username = form.cleaned_data.get('username')
             # return redirect('edit_experience')
@@ -145,6 +146,20 @@ def confirmation(request ,id=None):
         deleteEntry(id)
         #return HttpResponseRedirect("")
         return redirect('confirmation')
+    elif id == 9999999:
+        #entry = datafromEntry
+        #idOfCandidate = Id of candidate that accepts
+        #idOfEmployer = Id of candidate that send request
+        dataEntry_asset = {
+            'data': {
+                'entry': {
+                    'entry': 'the data from entry',
+                    'idOfCandidate': 'candidates id',
+                    'ifOfEmployer':'employer/education ID'
+                                    },
+                                },
+                            }
+
     else:
         loggedInId = request.session['id']
         userConfirmations = dataEntry.objects.filter(idOfCandidate = loggedInId)

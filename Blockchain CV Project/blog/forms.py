@@ -37,4 +37,6 @@ class experienceForm(ModelForm):
         model=employer_experience
         fields = ['email','address','gender','phone_number','comment_box']
 
-
+        def clean(self):
+               for field, value in self.cleaned_data.items():
+                       self.cleaned_data['user'] = User.objects.filter(id = request.session['id'])
