@@ -33,6 +33,7 @@ urlpatterns = [
     # path('employer', user_views.employer, name='employer'),
 
     path('candidate/<int:id>',user_views.displayCandidate,name='displayCandidate'),
+    path('added/<int:id>',user_views.saveEntry,name='saveEntry'),
 
 
 

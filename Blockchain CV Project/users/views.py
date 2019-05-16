@@ -87,7 +87,6 @@ def logout(request):
 '''
 Will allow a user to search for candidates with first name and last name
 Check forms.py for the form they search with
-
 '''
 def search(request):
     if request.method =='POST':
@@ -125,9 +124,8 @@ def displayCandidate(request,id):
 # edit_experience funtion
 def edit_experience(request):
     if request.method == 'POST':
-        form = experienceForm(request.POST)
+        form = experienceForm(request.POST) 
         if form.is_valid():
-
             form.save()
             # username = form.cleaned_data.get('username')
             # return redirect('edit_experience')
@@ -146,7 +144,17 @@ def confirmation(request ,id=None):
         deleteEntry(id)
         #return HttpResponseRedirect("")
         return redirect('confirmation')
-    elif id == 9999999:
+    else:
+        loggedInId = request.session['id']
+        userConfirmations = dataEntry.objects.filter(idOfCandidate = loggedInId)
+        args = {'item':userConfirmations}
+        return render(request,"users/confirmations.html",args)
+
+    
+def saveEntry(request,id):
+    saved = dataEntry.objects.filter(id = id)
+    args = {'item':saved}
+    if id == 9999999:
         #entry = datafromEntry
         #idOfCandidate = Id of candidate that accepts
         #idOfEmployer = Id of candidate that send request
@@ -159,14 +167,7 @@ def confirmation(request ,id=None):
                                     },
                                 },
                             }
-
-    else:
-        loggedInId = request.session['id']
-        userConfirmations = dataEntry.objects.filter(idOfCandidate = loggedInId)
-        args = {'item':userConfirmations}
-        return render(request,"users/confirmations.html",args)
-
-    
+    return render(request,'users/added.html',args)
 
 def deleteEntry(id):
     dataEntry.objects.filter(id = id).delete()

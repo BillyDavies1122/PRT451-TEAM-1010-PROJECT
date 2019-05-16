@@ -3,14 +3,14 @@
 {% block content %}
 
 <div class="container">
-    {% include 'users/menu.html' %}
+    {% include 'users/menuCandidate.html' %}
     <div class="content-section">
         <h1>Pending requests below</h1>
         {% for item in item %}
         <div id="confirmation>">
             <h3>{{item.entry}}</h3>
             <div id="buttons">
-                    <button class="btn btn-outline-info" type="submit" > Accept</button>
+                    <button class="btn btn-outline-info" type="submit" ><a href="/added/{{item.id}}"> Accept</button>
                     <button class="btn btn-outline-info" type="submit" method="POST"><a href="/confirmation/{{item.id}}"> Discard </a></button>
             </div>
         </div>
