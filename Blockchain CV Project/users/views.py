@@ -154,63 +154,79 @@ def confirmation(request ,id=None):
 def saveEntry(request,id):
     saved = dataEntry.objects.filter(id = id)
     args = {'item':saved}
-    if id == 9999999:
-        #entry = datafromEntry
-        #idOfCandidate = Id of candidate that accepts
-        #idOfEmployer = Id of candidate that send request
-        dataEntry_asset = {
-            'data': {
+    dataEntry_asset = {
                 'entry': {
-                    'entry': 'the data from entry',
-                    'idOfCandidate': 'candidates id',
-                    'ifOfEmployer':'employer/education ID'
+                    'data':saved
                                     },
-                                },
-                            }
+                                }
+    blockAdd(dataEntry_asset)
+    deleteEntry(id)
     return render(request,'users/added.html',args)
+    
 
 def deleteEntry(id):
     dataEntry.objects.filter(id = id).delete()
 
 
-
-
-
-
-
-
-
-
-
+def displayBlock(request):
+    args = {'item':blockchain}
+    return render(request,'users/testingchain.html',args)
 
 
 
 
 
 '''
-This isnt being used at the moment , was used to display a profile but we arent
-using this at the moment
-@login_required
-def profile(request):
-    if request.method == 'POST':
-        u_form = UserUpdateForm(request.POST, instance=request.user)
-        p_form = ProfileUpdateForm(request.POST,
-                                   request.FILES,
-                                   instance=request.user.profile)
-        if u_form.is_valid() and p_form.is_valid():
-            u_form.save()
-            p_form.save()
-            messages.success(request, f'Your account has been updated!')
-            return redirect('profile')
-
-    else:
-        u_form = UserUpdateForm(instance=request.user)
-        p_form = ProfileUpdateForm(instance=request.user.profile)
-
-    context = {
-        'u_form': u_form,
-        'p_form': p_form
-    }
-
-    return render(request, 'profile.html', context)
+blockchain
 '''
+
+import hashlib as hasher
+import datetime as date
+
+class Block:
+    def __init__(self, index, timestamp, data, previous_hash):
+        self.index = index
+        self.timestamp = timestamp
+        self.data = data
+        self.previous_hash = previous_hash
+        self.hash = self.hash_block()
+
+    def hash_block(self):
+        sha = hasher.sha256()
+        sha.update((str(self.index) +
+        str(self.timestamp) +
+        str(self.data) +
+        str(self.previous_hash)).encode()) #change here
+        return sha.hexdigest()
+
+def create_genesis_block():
+ # Manually construct a block with
+ # index zero and arbitrary previous hash
+ return Block(0, date.datetime.now(), "Genesis Block", "0")
+
+
+
+def next_block(last_block,data):
+  this_index = last_block.index + 1
+  this_timestamp = date.datetime.now()
+  this_data = data
+  this_hash = last_block.hash
+  return Block(this_index, this_timestamp, this_data, this_hash)
+
+
+
+# Create the blockchain and add the genesis block
+blockchain = [create_genesis_block()]
+previous_block = blockchain[-1]
+
+# Add blocks to the chain
+
+def blockAdd(content):
+    for i in range(0, 1):
+      previous_block = blockchain[-1]
+      block_to_add = next_block(previous_block,content)
+      blockchain.append(block_to_add)
+      previous_block = block_to_add
+      # Tell everyone about it!
+
+blockchain = [create_genesis_block()]
