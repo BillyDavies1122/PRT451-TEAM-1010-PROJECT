@@ -152,17 +152,14 @@ def confirmation(request ,id=None):
 
     
 def saveEntry(request,id):
-    saved = dataEntry.objects.filter(id = id)
-    args = {'item':saved}
-    dataEntry_asset = {
-                'entry': {
-                    'data':saved
-                                    },
-                                }
-    blockAdd(dataEntry_asset)
-    deleteEntry(id)
-    return render(request,'users/added.html',args)
-    
+        saved = dataEntry.objects.filter(id = id)
+        args = {'item':saved}
+        for item in saved:
+            blockAdd(saved,id)
+        dataEntry.objects.filter(id = id).delete()
+
+        return render(request,'users/added.html',args)
+
 
 def deleteEntry(id):
     dataEntry.objects.filter(id = id).delete()
@@ -177,11 +174,12 @@ def displayBlock(request):
 
 
 '''
-blockchain
+blockchain and its related functions below
 '''
 
 import hashlib as hasher
 import datetime as date
+import pickle
 
 class Block:
     def __init__(self, index, timestamp, data, previous_hash):
@@ -221,12 +219,20 @@ previous_block = blockchain[-1]
 
 # Add blocks to the chain
 
-def blockAdd(content):
+def blockAdd(content,id):
     for i in range(0, 1):
       previous_block = blockchain[-1]
       block_to_add = next_block(previous_block,content)
       blockchain.append(block_to_add)
       previous_block = block_to_add
-      # Tell everyone about it!
+      with open("users/save.p","wb") as pickle_out:
+          pickle.dump(blockchain,pickle_out)
+          pickle_out.close()
 
-blockchain = [create_genesis_block()]
+
+try:
+     with open("users/save.p","rb") as pickle_in:
+            blockchain = pickle.load(pickle_in)
+except EOFError:
+    blockchain = [create_genesis_block()]
+      
