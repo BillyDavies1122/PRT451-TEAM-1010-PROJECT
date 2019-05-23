@@ -1,11 +1,15 @@
 {
   "ExpandedNodes": [
     "",
+    "\\Blockchain CV Project",
     "\\Blockchain CV Project\\blog",
+    "\\Blockchain CV Project\\blog\\templates",
     "\\Blockchain CV Project\\blog\\templates\\blog",
+    "\\Blockchain CV Project\\django_project",
     "\\Blockchain CV Project\\users",
+    "\\Blockchain CV Project\\users\\templates",
     "\\Blockchain CV Project\\users\\templates\\users"
   ],
-  "SelectedNode": "\\README.md",
+  "SelectedNode": "\\Blockchain CV Project\\users\\templates\\users\\menuCandidate.html",
   "PreviewInSolutionExplorer": false
 }
