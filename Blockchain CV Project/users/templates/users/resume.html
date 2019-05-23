@@ -1,0 +1,19 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+{% include 'users/menuCandidate.html' %}
+
+{% if item %}
+        {% for item in item %}
+<ul>
+    <li><p>{{item}}</p></li>
+</ul>
+        {% endfor %}
+{% else %}
+
+<p>No resume to show</p>
+
+{% endif %}
+
+
+{% endblock content %}

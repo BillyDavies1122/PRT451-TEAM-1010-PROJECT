@@ -152,7 +152,8 @@ def confirmation(request ,id=None):
 
     
 def saveEntry(request,id):
-        saved = dataEntry.objects.filter(id = id)
+        saved = list(dataEntry.objects.filter(id = id).values_list('entry','idOfCandidate','idOfEmployer'))
+
         args = {'item':saved}
         for item in saved:
             blockAdd(saved,id)
@@ -168,6 +169,21 @@ def deleteEntry(id):
 def displayBlock(request):
     args = {'item':blockchain}
     return render(request,'users/testingchain.html',args)
+
+def loadResume(request):
+    currentId = request.session['id']
+    resumeOfUser = []
+    for item in range(1,len(blockchain)):
+        for y in blockchain[item].data:
+            if y[1] == currentId:
+                newlist = [y[0]]
+                resumeOfUser.append(newlist)
+                print(resumeOfUser)
+    args = {'item':resumeOfUser}
+    print(args)
+    return render(request,'users/resume.html',args)
+
+            
 
 
 
@@ -213,9 +229,8 @@ def next_block(last_block,data):
 
 
 
-# Create the blockchain and add the genesis block
-blockchain = [create_genesis_block()]
-previous_block = blockchain[-1]
+
+
 
 # Add blocks to the chain
 
@@ -229,7 +244,7 @@ def blockAdd(content,id):
           pickle.dump(blockchain,pickle_out)
           pickle_out.close()
 
-
+# Create the blockchain and add the genesis block or load the previos data
 try:
      with open("users/save.p","rb") as pickle_in:
             blockchain = pickle.load(pickle_in)

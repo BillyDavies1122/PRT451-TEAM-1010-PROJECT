@@ -34,7 +34,8 @@ urlpatterns = [
 
     path('candidate/<int:id>',user_views.displayCandidate,name='displayCandidate'),
     path('added/<int:id>',user_views.saveEntry,name='saveEntry'),
-    path('displayblock',user_views.displayBlock,name='displayBlock')
+    path('displayblock',user_views.displayBlock,name='displayBlock'),
+    path('resume',user_views.loadResume,name='loadResume')
 
 
 
