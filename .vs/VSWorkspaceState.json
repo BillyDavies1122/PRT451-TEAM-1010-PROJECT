@@ -10,6 +10,6 @@
     "\\Blockchain CV Project\\users\\templates",
     "\\Blockchain CV Project\\users\\templates\\users"
   ],
-  "SelectedNode": "\\Blockchain CV Project\\users\\templates\\users\\menuCandidate.html",
+  "SelectedNode": "\\Blockchain CV Project\\users\\views.py",
   "PreviewInSolutionExplorer": false
 }

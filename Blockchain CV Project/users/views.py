@@ -140,25 +140,26 @@ def edit_experience(request):
 
 
 def confirmation(request ,id=None):
-    if id != None:
-        deleteEntry(id)
-        #return HttpResponseRedirect("")
-        return redirect('confirmation')
+    userRole = 'Candidate'
+    if checkLoginStatus(request.session['id'],request.session['type'],userRole) == True:
+        if id != None:
+            deleteEntry(id)
+            #return HttpResponseRedirect("")
+            return redirect('confirmation')
+        else:
+            loggedInId = request.session['id']
+            userConfirmations = dataEntry.objects.filter(idOfCandidate = loggedInId)
+            args = {'item':userConfirmations}
+            return render(request,"users/confirmations.html",args)
     else:
-        loggedInId = request.session['id']
-        userConfirmations = dataEntry.objects.filter(idOfCandidate = loggedInId)
-        args = {'item':userConfirmations}
-        return render(request,"users/confirmations.html",args)
-
+        return render(request,'users/nopermission.html')
     
 def saveEntry(request,id):
         saved = list(dataEntry.objects.filter(id = id).values_list('entry','idOfCandidate','idOfEmployer'))
-
         args = {'item':saved}
         for item in saved:
             blockAdd(saved,id)
         dataEntry.objects.filter(id = id).delete()
-
         return render(request,'users/added.html',args)
 
 
@@ -171,19 +172,43 @@ def displayBlock(request):
     return render(request,'users/testingchain.html',args)
 
 def loadResume(request):
-    currentId = request.session['id']
-    resumeOfUser = []
-    for item in range(1,len(blockchain)):
-        for y in blockchain[item].data:
-            if y[1] == currentId:
-                newlist = [y[0]]
-                resumeOfUser.append(newlist)
-                print(resumeOfUser)
-    args = {'item':resumeOfUser}
-    print(args)
-    return render(request,'users/resume.html',args)
+    userRole = 'Candidate'
+    if checkLoginStatus(request.session['id'],request.session['type'],userRole) == True:
+        currentId = request.session['id']
+        resumeOfUser = []
+        for item in range(1,len(blockchain)):
+            for y in blockchain[item].data:
+                if y[1] == currentId:
+                    newlist = [y[0]]
+                    resumeOfUser.append(newlist)
+                    print(resumeOfUser)
+        args = {'item':resumeOfUser}
+        print(args)
+        return render(request,'users/resume.html',args)
+    else:
+        return render(request,'users/nopermission.html')
 
             
+
+def checkLoginStatus(id,role,roleToCheckFor):
+    if roleToCheckFor == "Candidate":
+        if User.objects.filter(Q(id=id)&Q(roleOfUser=role)):
+            return True
+        else:
+            return False
+    elif roleToCheckFor == "Employer":
+        if User.objects.filter(Q(id=id)&Q(role=roleOfUser)):
+            return True
+        else:
+            return False
+    elif roleToCheckFor == "Education":
+        if User.objects.filter(Q(id=id)&Q(role=roleOfUser)):
+            return True
+        else:
+            return False
+    else:
+        return False
+
 
 
 
