@@ -5,7 +5,6 @@ from .models import *
 
 
 #admin.site.register(Post)
-
 #admin.site.register(employer_education)
 admin.site.register(User)
 admin.site.register(dataEntry)
