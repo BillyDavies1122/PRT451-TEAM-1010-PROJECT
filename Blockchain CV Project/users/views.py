@@ -114,27 +114,32 @@ def displayCandidate(request,id):
             return redirect('search')
     else:
         user = User.objects.filter(id = id)
-        employer = employer_experience.objects.filter(user_id = id)
         loggedIn = request.session['id']
         form = dataForm(initial={'idOfCandidate': id,'idOfEmployer':loggedIn})
-        args = {'user':user,'form':form,'employer_experience':employer}
+        args = {'user':user,'form':form}
         return render(request,'users/selection.html',args)
 
 
 # edit_experience funtion
 def edit_experience(request):
     if request.method == 'POST':
-        form = experienceForm(request.POST) 
-        if form.is_valid():
-            form.save()
-            # username = form.cleaned_data.get('username')
-            # return redirect('edit_experience')
-            return render(request, 'users/employee.html')
+        id = request.session['id']
+        if candidateDetails.objects.filter(user = id):
+            print("Hello world")
+            candidateDetails.objects.filter(user=id).delete()
+            form = experienceForm(request.POST)
+            if form.is_valid():
+                print("Hello world2")
+                form.save()
+                return render(request, 'users/added.html')
+        else:                    
+            form = experienceForm(request.POST) 
+            if form.is_valid():
+                form.save()
+                return render(request, 'users/added.html')
     else:
-        # # user = User.objects.filter(id=id)
-        form = experienceForm()
-        # # args = {'user': user, 'form': form}
-        # args = {'form':form}
+        loggedIn = request.session['id']
+        form = experienceForm(initial ={'user':loggedIn})
     return render(request, 'users/edit_experience.html', {'form':form})
 
 

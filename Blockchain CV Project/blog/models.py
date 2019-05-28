@@ -69,7 +69,7 @@ class dataEntry(models.Model):
 
 # model of work experience
 class candidateDetails(models.Model):
-    user = models.DecimalField(max_digits=10000,decimal_places=0)
+    user = models.DecimalField(max_digits=10000,decimal_places=0,unique=True)
     email = models.CharField(max_length=50)
     address = models.CharField(max_length=50)
     gender = models.CharField(max_length=50)
