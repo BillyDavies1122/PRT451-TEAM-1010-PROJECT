@@ -1,8 +1,9 @@
 {% extends "blog/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-{% include 'users/menu.html' %}
-<div class="container"> 
+
+<div class="container">
+    {% include 'users/menu.html' %}
     {% if item %}
     {% for item in item %}
     <div class="content-section">
