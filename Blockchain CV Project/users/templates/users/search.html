@@ -19,7 +19,7 @@
             <p>Search to get started</p>
         {% else %}
             {% for user in users %}
-            <li><h3><a href="/candidate/{{user.id}}">{{ user.fname|title }} {{user.sname|title}}, Medicare number is {{user.medicare}}</a></h3></li>
+            <li><h3><a href="/candidate/{{user.id}}">{{ user.fname|title }} {{user.sname|title}}</a></h3></li>
             {% endfor %}
         {% endif %}
     </ul>

@@ -1,0 +1,17 @@
+{% extends 'users/education.html' %}
+{% load crispy_forms_tags %}
+{% block data %}
+<div class="displayAll">
+    <h1> Candidate Search</h1>
+    <h1>Results shown below</h1>
+    <ul>
+        {% if not user %}
+            <p>Search to get started</p>
+        {% else %}
+            {% for user in users %}
+            <li><h3><a href="/searchResume/{{user.id}}">{{ user.fname|title }} {{user.sname|title}}</a></h3></li>
+            {% endfor %}
+        {% endif %}
+    </ul>
+</div>
+{% endblock data %}

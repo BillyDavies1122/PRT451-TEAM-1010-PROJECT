@@ -201,6 +201,37 @@ def loadResume(request):
     else:
         return render(request,'users/nopermission.html')
 
+
+def searchResumes(request):
+    if request.method =='POST':
+        form = searchForm(request.POST)
+        if form.is_valid():
+            data = request.POST.copy()
+            fname = data.get('fname').lower()
+            sname = data.get('sname').lower()
+            if User.objects.filter(Q(fname=fname)&Q(sname=sname)):
+                users = User.objects.filter(Q(fname=fname)&Q(sname=sname))
+                args = {'users':users}
+        return render(request,'users/searchResume.html',args)
+    else:
+        form = searchForm()
+        return render(request,'users/search.html',{'form':form})
+
+
+
+def loadCandidateResume(request,id):
+    currentId = id
+    resumeOfUser = []
+    for item in range(1,len(blockchain)):
+            for y in blockchain[item].data:
+                if y[4] == currentId:
+                    entry = y[0]
+                    name = y[1] + y[2]
+                    institute = y[3]
+                    newlist = [y[0],y[1],y[2],y[3]]
+                    resumeOfUser.append(newlist)
+    args = {'item':resumeOfUser}
+    return render(request,'users/resumeEduEmp.html',args)
             
 
 def checkLoginStatus(id,role,roleToCheckFor):
