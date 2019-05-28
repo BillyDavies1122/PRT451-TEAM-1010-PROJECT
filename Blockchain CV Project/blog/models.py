@@ -56,6 +56,9 @@ class employer_education(models.Model):
 
 class dataEntry(models.Model):
     entry = models.TextField()
+    fname= models.CharField(max_length=50)
+    sname = models.CharField(max_length=50)
+    instituteName = models.CharField(max_length=50)
     idOfCandidate = models.DecimalField(max_digits=10000,decimal_places=0)
     idOfEmployer = models.DecimalField(max_digits=10000,decimal_places=0)
 

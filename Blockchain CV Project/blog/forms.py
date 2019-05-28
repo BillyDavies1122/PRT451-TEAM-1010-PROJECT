@@ -25,7 +25,7 @@ class searchForm(forms.Form):
 class dataForm(ModelForm):
     class Meta:
         model=dataEntry
-        fields =['entry','idOfCandidate','idOfEmployer']
+        fields =['entry','instituteName','fname','sname','idOfCandidate','idOfEmployer']
         widgets = {
             'entry':forms.Textarea,
             'idOfCandidate':forms.HiddenInput,

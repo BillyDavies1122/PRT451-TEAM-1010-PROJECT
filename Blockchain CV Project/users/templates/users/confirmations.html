@@ -9,6 +9,8 @@
         {% for item in item %}
         <div id="confirmation>">
             <h3>{{item.entry}}</h3>
+            <h4>Added by : {{item.fname}} {{item.sname}}</h4>
+            <h4>Works for: {{item.instituteName}}</h4>
             <div id="buttons">
                     <button class="btn btn-outline-info" type="submit" ><a href="/added/{{item.id}}"> Accept</button>
                     <button class="btn btn-outline-info" type="submit" method="POST"><a href="/confirmation/{{item.id}}"> Discard </a></button>
