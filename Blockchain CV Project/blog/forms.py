@@ -35,7 +35,7 @@ class dataForm(ModelForm):
 class experienceForm(ModelForm):
     class Meta:
         model= candidateDetails
-        fields = ['user','email','address','gender','phone_number','comment_box','medicare']
+        fields = ['user','email','address','gender','phone_number','medicare']
         widgets = {
             'user':forms.HiddenInput,
             }

@@ -74,7 +74,6 @@ class candidateDetails(models.Model):
     address = models.CharField(max_length=50)
     gender = models.CharField(max_length=50)
     phone_number = models.CharField(max_length=50)
-    comment_box = models.CharField(max_length=50)
     medicare = models.DecimalField(max_digits=10,decimal_places=0)
 
     #String representation of the model
