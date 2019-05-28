@@ -160,7 +160,7 @@ def confirmation(request ,id=None):
         return render(request,'users/nopermission.html')
     
 def saveEntry(request,id):
-        saved = list(dataEntry.objects.filter(id = id).values_list('entry','idOfCandidate','idOfEmployer'))
+        saved = list(dataEntry.objects.filter(id = id).values_list('entry','fname','sname','instituteName','idOfCandidate','idOfEmployer'))
         args = {'item':saved}
         for item in saved:
             blockAdd(saved,id)
@@ -183,10 +183,18 @@ def loadResume(request):
         resumeOfUser = []
         for item in range(1,len(blockchain)):
             for y in blockchain[item].data:
-                if y[1] == currentId:
-                    newlist = [y[0]]
+                if y[4] == currentId:
+                    entry = y[0]
+                    name = y[1] + y[2]
+                    institute = y[3]
+                    newlist = [y[0],y[1],y[2],y[3]]
+            
+                    resume = {
+                        'entry':entry,
+                        'name':name,
+                        'institute':institute,
+                        }
                     resumeOfUser.append(newlist)
-                    #print(resumeOfUser)
         args = {'item':resumeOfUser}
         #print(args)
         return render(request,'users/resume.html',args)

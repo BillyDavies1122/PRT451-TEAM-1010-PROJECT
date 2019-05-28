@@ -3,17 +3,22 @@
 {% block content %}
 {% include 'users/menuCandidate.html' %}
 
-{% if item %}
-        {% for item in item %}
-<ul>
-    <li><p>{{item}}</p></li>
-</ul>
-        {% endfor %}
-{% else %}
+<div class="container"> 
+    {% if item %}
+    {% for item in item %}
+    <div class="content-section">
+        <ul>
+            <li><p>Note left: {{item.0}}</p></li>
+            <li><p>Left by: {{item.1|title}} {{item.2|title}}</p></li>
+            <li><p>Company Name:{{item.3|title}} </p></li>
+        </ul>
+    </div>
+    {% endfor %}
+    {% else %}
 
-<p>No resume to show</p>
+    <p>No resume to show</p>
 
-{% endif %}
-
+    {% endif %}
+</div>
 
 {% endblock content %}
