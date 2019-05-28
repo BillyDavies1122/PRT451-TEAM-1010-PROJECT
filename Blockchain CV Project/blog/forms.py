@@ -6,7 +6,7 @@ from .models import *
 class registrationForm(ModelForm):
     class Meta:
         model=User
-        fields = ['username','fname','sname','password','dateOfBirth','roleOfUser','medicare']
+        fields = ['username','fname','sname','password','dateOfBirth','roleOfUser']
         widgets = {
             'password':forms.PasswordInput(),
             }
@@ -34,9 +34,11 @@ class dataForm(ModelForm):
 
 class experienceForm(ModelForm):
     class Meta:
-        model=employer_experience
-        fields = ['email','address','gender','phone_number','comment_box']
-
+        model= candidateDetails
+        fields = ['user','email','address','gender','phone_number','comment_box','medicare']
+        widgets = {
+            'user':forms.HiddenInput,
+            }
         def clean(self):
                for field, value in self.cleaned_data.items():
                        self.cleaned_data['user'] = User.objects.filter(id = request.session['id'])

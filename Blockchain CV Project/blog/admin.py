@@ -8,4 +8,4 @@ from .models import *
 admin.site.register(User)
 admin.site.register(employer_education)
 admin.site.register(dataEntry)
-admin.site.register(employer_experience)
+admin.site.register(candidateDetails)

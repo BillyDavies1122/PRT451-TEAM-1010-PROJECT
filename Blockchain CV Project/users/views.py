@@ -181,9 +181,9 @@ def loadResume(request):
                 if y[1] == currentId:
                     newlist = [y[0]]
                     resumeOfUser.append(newlist)
-                    print(resumeOfUser)
+                    #print(resumeOfUser)
         args = {'item':resumeOfUser}
-        print(args)
+        #print(args)
         return render(request,'users/resume.html',args)
     else:
         return render(request,'users/nopermission.html')

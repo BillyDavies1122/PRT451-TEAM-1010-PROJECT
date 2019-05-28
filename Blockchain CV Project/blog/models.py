@@ -19,10 +19,9 @@ class User(models.Model):
     password = models.CharField(max_length=50)
     dateOfBirth = models.DateTimeField(default=timezone.now)
     roleOfUser = models.CharField(max_length=50,choices=RoleChoices)
-    medicare = models.DecimalField(max_digits=10,decimal_places=0)
     #String representation of the model
     def __str__(self):
-        return 'Username is {}, with Medicare number {} id is {}'.format(self.username,self.medicare,self.id)
+        return 'Username is {}, id is {}'.format(self.username,self.id)
 
     #Makes sure these three fields are saved in lower case by overwriting the save method
     def save(self, *args, **kwargs):
@@ -69,21 +68,16 @@ class dataEntry(models.Model):
 
 
 # model of work experience
-class employer_experience(models.Model):
-    user = models.OneToOneField(
-        User,
-        on_delete=models.CASCADE,
-        primary_key=True,)
-    # username = models.CharField(unique=True,max_length=50)
+class candidateDetails(models.Model):
+    user = models.DecimalField(max_digits=10000,decimal_places=0)
     email = models.CharField(max_length=50)
     address = models.CharField(max_length=50)
     gender = models.CharField(max_length=50)
     phone_number = models.CharField(max_length=50)
     comment_box = models.CharField(max_length=50)
-
+    medicare = models.DecimalField(max_digits=10,decimal_places=0)
 
     #String representation of the model
     def __str__(self):
-        return 'Name:{} {} address:{}'.format(self.user.fname,self.user.sname,self.email)
-
+        return 'Name:{}'.format(self.user)
 
