@@ -10,16 +10,23 @@ class registrationForm(ModelForm):
         widgets = {
             'password':forms.PasswordInput(),
             }
+        labels = {
+            "fname": "First Name",
+            "sname": "Surname",
+            "dateOfBirth": "Date of Birth",
+            "roleOfUser":"Select your Role"
+            }
 
 
 
 class loginForm(forms.Form):
-        username = forms.CharField(label = 'username')
-        password = forms.CharField(label = 'password',widget=forms.PasswordInput())
+        username = forms.CharField(label = 'Username')
+        password = forms.CharField(label = 'Password',widget=forms.PasswordInput())
+
 
 class searchForm(forms.Form):
-    fname = forms.CharField(label = 'fname')
-    sname = forms.CharField(label = 'sname')
+    fname = forms.CharField(label = 'First Name')
+    sname = forms.CharField(label = 'Surname')
 
 
 class dataForm(ModelForm):
@@ -32,6 +39,14 @@ class dataForm(ModelForm):
             'idOfEmployer':forms.HiddenInput,
             }
 
+        labels = {
+            "entry":"Enter work details for the candidate , include all relevant information",
+            "fname": "Your First Name",
+            "sname": "Your Surname",
+            "instituteName":"Name of company you work for"
+
+            }
+
 class experienceForm(ModelForm):
     class Meta:
         model= candidateDetails
@@ -39,6 +54,14 @@ class experienceForm(ModelForm):
         widgets = {
             'user':forms.HiddenInput,
             }
+        labels = {
+            "email":"Email Address",
+            "address":"Home Address",
+            "gender":"Gender",
+            "phone_number":"Phone Number",
+            "medicare":"Medicare Number",
+            }
+
         def clean(self):
                for field, value in self.cleaned_data.items():
                        self.cleaned_data['user'] = User.objects.filter(id = request.session['id'])

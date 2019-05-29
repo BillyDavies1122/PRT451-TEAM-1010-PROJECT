@@ -320,28 +320,22 @@ def checkLoginStatus(id,role,roleToCheckFor):
     #if candidate
     if roleToCheckFor == 'candidate':
         if User.objects.filter(Q(id=id)&Q(roleOfUser='1')):
-            print('candidate')
-            print(role)
-            print(id)
+            
             return True
         else:
             return False
     # if employer
     elif roleToCheckFor == 'employer':
         if User.objects.filter(Q(id=id)&Q(roleOfUser='2')):
-            print('employer')
-            print(role)
-            print(id)
+            
             return True
         else:
             return False
     # if education
     elif roleToCheckFor == 'education':
-        print(role)
+        
         if User.objects.filter(Q(id=id)&Q(roleOfUser='3')):
-            print('education')
-            print(role)
-            print(id)
+           
             return True
         else:
             return False
