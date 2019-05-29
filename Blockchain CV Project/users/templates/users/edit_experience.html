@@ -2,16 +2,15 @@
 {% load crispy_forms_tags %}
 {% block content %}
         <div class="content-section">
-        <form method="POST">
-            {% csrf_token %}
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Edit experience</legend>
-                {{ form|crispy }}
-                <button class="btn btn-outline-info" type="submit">Save</button>
-        </form>
-                <div class="form-group">
-                    <button class="btn btn-outline-info" href="{% url 'login'">Back</button>
-                </div>
-            </fieldset>
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">Edit experience</legend>
+                    {{ form|crispy }}
+                    <button class="btn btn-outline-info" type="submit">Save</button>
+
+                </fieldset>
+            </form>
+        </div>
 
     {% endblock content %}

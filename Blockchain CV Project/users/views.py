@@ -61,6 +61,12 @@ def login(request):
                     return render(request,'users/education.html')
         
             else:
+                try:
+                    #delete their session
+                    del request.session['id']
+                    del request.session['type']
+                except KeyError:
+                    pass
                 form = loginForm()
     else:
         form = loginForm()
@@ -87,144 +93,215 @@ def logout(request):
 '''
 Will allow a user to search for candidates with first name and last name
 Check forms.py for the form they search with
+
+If the request isnt a post it sends a simple form to the template
+if its a post request it gets the fname and sname elements and makes it lower case, then it  searches the database for anyone called that and sends a dict with all users it found to the template to be rendered
 '''
 def search(request):
-    if request.method =='POST':
-        form = searchForm(request.POST)
-        if form.is_valid():
-            data = request.POST.copy()
-            fname = data.get('fname').lower()
-            sname = data.get('sname').lower()
-            if User.objects.filter(Q(fname=fname)&Q(sname=sname)):
-                users = User.objects.filter(Q(fname=fname)&Q(sname=sname))
-                args = {'users':users}
-                return render(request,'users/search.html',args)
-            else:
-                form = searchForm()
-    else:
-        form = searchForm()
-    return render(request,'users/search.html',{'form':form})
-
-def displayCandidate(request,id):
-    if request.method =='POST':
-        form = dataForm(request.POST)
-        if form.is_valid():
-            form.save()
+    #checks permission
+    if checkLoginStatus(request.session['id'],request.session['type'],'employer') or checkLoginStatus(request.session['id'],request.session['type'],'education') == True:
+        if request.method =='POST':
+            form = searchForm(request.POST)
+            if form.is_valid():
+                #gets data from post 
+                data = request.POST.copy()
+                #set names to lowercase
+                fname = data.get('fname').lower()
+                sname = data.get('sname').lower()
+                #if  that user exists
+                if User.objects.filter(Q(fname=fname)&Q(sname=sname)):
+                    #create a query object and add to dict then send back to be rendered
+                    users = User.objects.filter(Q(fname=fname)&Q(sname=sname))
+                    args = {'users':users}
+                    return render(request,'users/search.html',args)
+                else:
+                    form = searchForm()
+        else:
             form = searchForm()
-            return redirect('search')
+        return render(request,'users/search.html',{'form':form})
     else:
-        user = User.objects.filter(id = id)
-        loggedIn = request.session['id']
-        form = dataForm(initial={'idOfCandidate': id,'idOfEmployer':loggedIn})
-        args = {'user':user,'form':form}
-        return render(request,'users/selection.html',args)
+        #send them here if  they done have permission
+        return render(request,'users/nopermission.html')
 
+
+'''
+This function is used to write and save entries about a selected candidate
+It takes in a candidates id and a request
+If the user has permission and the request is not a POST it will first send  create a form to send to the template specified with the id of the candidate and the person entering already filled in
+When a user submits the form it then checks its valid and saves it. then it  redirects you  have to the search page
+'''
+def displayCandidate(request,id):
+    #check permissions
+    if checkLoginStatus(request.session['id'],request.session['type'],'employer') or checkLoginStatus(request.session['id'],request.session['type'],'education') == True:
+        if request.method =='POST':
+            form = dataForm(request.POST)
+            if form.is_valid():
+                form.save()
+                form = searchForm()
+                return redirect('search')
+        else:
+            user = User.objects.filter(id = id)
+            loggedIn = request.session['id']
+            form = dataForm(initial={'idOfCandidate': id,'idOfEmployer':loggedIn})
+            args = {'user':user,'form':form}
+            return render(request,'users/selection.html',args)
+    else:
+        #if no permission redirect them here
+        return render(request,'users/nopermission.html')
 
 # edit_experience funtion
+'''
+This function allows a candidate to edit their information
+If the user has already added data about them , it edits that data. otherwise it creates an entry linked to their account with their extra details
+'''
 def edit_experience(request):
-    if request.method == 'POST':
-        id = request.session['id']
-        if candidateDetails.objects.filter(user = id):
-            print("Hello world")
-            candidateDetails.objects.filter(user=id).delete()
-            form = experienceForm(request.POST)
-            if form.is_valid():
-                print("Hello world2")
-                form.save()
-                return render(request, 'users/added.html')
-        else:                    
-            form = experienceForm(request.POST) 
-            if form.is_valid():
-                form.save()
-                return render(request, 'users/added.html')
+    if checkLoginStatus(request.session['id'],request.session['type'],'candidate') == True:
+        if request.method == 'POST':
+            id = request.session['id']
+            #if they have already got an entry saved delete the current one and save the new one
+            if candidateDetails.objects.filter(user = id):
+               
+                candidateDetails.objects.filter(user=id).delete()
+                form = experienceForm(request.POST)
+                if form.is_valid():
+                    form.save()
+                    return render(request, 'users/added.html')
+            #if not then we add one
+            else:                    
+                form = experienceForm(request.POST) 
+                if form.is_valid():
+                    form.save()
+                    return render(request, 'users/added.html')
+        else:
+            loggedIn = request.session['id']
+            form = experienceForm(initial ={'user':loggedIn})
+        return render(request, 'users/edit_experience.html', {'form':form})
     else:
-        loggedIn = request.session['id']
-        form = experienceForm(initial ={'user':loggedIn})
-    return render(request, 'users/edit_experience.html', {'form':form})
+        return render(request,'users/nopermission.html')
 
+'''
+This function checks if a user has any pending confirmations
+then can accept or deny them
 
+'''
 
 def confirmation(request ,id=None):
-    userRole = 'Candidate'
-    if checkLoginStatus(request.session['id'],request.session['type'],userRole) == True:
+    userRole = 'candidate'
+    #if they have permission
+    if checkLoginStatus(request.session['id'],request.session['type'],'candidate') == True:
+        #if the id is not none then they must be deleteing
         if id != None:
+            #delete the entry
             deleteEntry(id)
-            #return HttpResponseRedirect("")
             return redirect('confirmation')
         else:
+            #get all confirmations this user may have
             loggedInId = request.session['id']
             userConfirmations = dataEntry.objects.filter(idOfCandidate = loggedInId)
             args = {'item':userConfirmations}
             return render(request,"users/confirmations.html",args)
     else:
+        #if not redirect them here
         return render(request,'users/nopermission.html')
-    
+
+'''
+This function saves an entry
+it takes in the id of an entry
+then saves it to the blockchain using the blockAdd function
+'''
 def saveEntry(request,id):
+        #Creates a list object out of the needed entry
         saved = list(dataEntry.objects.filter(id = id).values_list('entry','fname','sname','instituteName','idOfCandidate','idOfEmployer'))
+        #adds the list to a dict
         args = {'item':saved}
+        #saves all the i tems in the dict
         for item in saved:
             blockAdd(saved,id)
+        #deltes  the entry as its not saved and we dont need it anymore
         dataEntry.objects.filter(id = id).delete()
+        #display the added page
         return render(request,'users/added.html',args)
 
-
+'''
+Takes in an id and deletes the associated entry
+'''
 def deleteEntry(id):
     dataEntry.objects.filter(id = id).delete()
 
-
+'''
+displays all blocks in the chain
+not meant for use outside of demonstrations and trouble shooting
+'''
 def displayBlock(request):
     args = {'item':blockchain}
     return render(request,'users/testingchain.html',args)
 
+'''
+Function used to load logged in users resumes
+loops through the blockchain finding all relevant blocks
+then sends it to a template to be rendered
+
+'''
 def loadResume(request):
-    userRole = 'Candidate'
+    userRole = 'candidate'
+    #if they have permssion
     if checkLoginStatus(request.session['id'],request.session['type'],userRole) == True:
         currentId = request.session['id']
         resumeOfUser = []
+        #loop through the blockchain
         for item in range(1,len(blockchain)):
             for y in blockchain[item].data:
+                #if the id of candidate is in the block add all the data to a list
                 if y[4] == currentId:
                     entry = y[0]
                     name = y[1] + y[2]
                     institute = y[3]
                     newlist = [y[0],y[1],y[2],y[3]]
-            
-                    resume = {
-                        'entry':entry,
-                        'name':name,
-                        'institute':institute,
-                        }
+                   #add to another list
                     resumeOfUser.append(newlist)
+        #add the list to a dictionary
         args = {'item':resumeOfUser}
-        #print(args)
+        #return the dict to be rendered
         return render(request,'users/resume.html',args)
+    else:
+        #user didnt have permission
+        return render(request,'users/nopermission.html')
+
+'''
+Used to search through candidates as education and employer type user
+works the same as the other search function but its redirecting to a different page
+'''
+def searchResumes(request):
+    if checkLoginStatus(request.session['id'],request.session['type'],'employer') or checkLoginStatus(request.session['id'],request.session['type'],'education') == True:
+        if request.method =='POST':
+            form = searchForm(request.POST)
+            if form.is_valid():
+                data = request.POST.copy()
+                fname = data.get('fname').lower()
+                sname = data.get('sname').lower()
+                if User.objects.filter(Q(fname=fname)&Q(sname=sname)):
+                    users = User.objects.filter(Q(fname=fname)&Q(sname=sname))
+                    args = {'users':users}
+            return render(request,'users/searchResume.html',args)
+        else:
+            form = searchForm()
+            return render(request,'users/search.html',{'form':form})
     else:
         return render(request,'users/nopermission.html')
 
 
-def searchResumes(request):
-    if request.method =='POST':
-        form = searchForm(request.POST)
-        if form.is_valid():
-            data = request.POST.copy()
-            fname = data.get('fname').lower()
-            sname = data.get('sname').lower()
-            if User.objects.filter(Q(fname=fname)&Q(sname=sname)):
-                users = User.objects.filter(Q(fname=fname)&Q(sname=sname))
-                args = {'users':users}
-        return render(request,'users/searchResume.html',args)
-    else:
-        form = searchForm()
-        return render(request,'users/search.html',{'form':form})
+'''
+used by employers and education to load a candidates resume
+Loops through the blockchain checking for the specified Id
+Sends a dict containing a list of lists to the template to be rendered
 
-
-
+'''
 def loadCandidateResume(request,id):
-    currentId = id
+    candidateId = id
     resumeOfUser = []
     for item in range(1,len(blockchain)):
             for y in blockchain[item].data:
-                if y[4] == currentId:
+                if y[4] == candidateId:
                     entry = y[0]
                     name = y[1] + y[2]
                     institute = y[3]
@@ -232,21 +309,39 @@ def loadCandidateResume(request,id):
                     resumeOfUser.append(newlist)
     args = {'item':resumeOfUser}
     return render(request,'users/resumeEduEmp.html',args)
-            
 
+            
+'''
+This function checks whether a user is allowed access to pages when it  is called
+It takes in the users id , their role and the role we are checking for
+written by Billy Davies
+'''
 def checkLoginStatus(id,role,roleToCheckFor):
-    if roleToCheckFor == "Candidate":
-        if User.objects.filter(Q(id=id)&Q(roleOfUser=role)):
+    #if candidate
+    if roleToCheckFor == 'candidate':
+        if User.objects.filter(Q(id=id)&Q(roleOfUser='1')):
+            print('candidate')
+            print(role)
+            print(id)
             return True
         else:
             return False
-    elif roleToCheckFor == "Employer":
-        if User.objects.filter(Q(id=id)&Q(role=roleOfUser)):
+    # if employer
+    elif roleToCheckFor == 'employer':
+        if User.objects.filter(Q(id=id)&Q(roleOfUser='2')):
+            print('employer')
+            print(role)
+            print(id)
             return True
         else:
             return False
-    elif roleToCheckFor == "Education":
-        if User.objects.filter(Q(id=id)&Q(role=roleOfUser)):
+    # if education
+    elif roleToCheckFor == 'education':
+        print(role)
+        if User.objects.filter(Q(id=id)&Q(roleOfUser='3')):
+            print('education')
+            print(role)
+            print(id)
             return True
         else:
             return False
@@ -260,6 +355,7 @@ def checkLoginStatus(id,role,roleToCheckFor):
 
 '''
 blockchain and its related functions below
+used https://medium.com/crypto-currently/lets-build-the-tiniest-blockchain-e70965a248b to help create it
 '''
 
 import hashlib as hasher
@@ -267,6 +363,15 @@ import datetime as date
 import pickle
 
 class Block:
+    '''
+     initialise the block
+     block has a index
+     block has the timestamp it was made
+     block has the data it contains
+     block has the hash of the previous block
+     block has its own hash
+
+    '''
     def __init__(self, index, timestamp, data, previous_hash):
         self.index = index
         self.timestamp = timestamp
@@ -277,9 +382,9 @@ class Block:
     def hash_block(self):
         sha = hasher.sha256()
         sha.update((str(self.index) +
-        str(self.timestamp) +
-        str(self.data) +
-        str(self.previous_hash)).encode()) #change here
+            str(self.timestamp) +
+            str(self.data) +
+            str(self.previous_hash)).encode())
         return sha.hexdigest()
 
 def create_genesis_block():
@@ -300,9 +405,10 @@ def next_block(last_block,data):
 
 
 
-
 # Add blocks to the chain
-
+'''
+This function adds blocks passed through to it to the chain, then saves the blockchain using the pickle library to a file
+'''
 def blockAdd(content,id):
     for i in range(0, 1):
       previous_block = blockchain[-1]
@@ -313,7 +419,7 @@ def blockAdd(content,id):
           pickle.dump(blockchain,pickle_out)
           pickle_out.close()
 
-# Create the blockchain and add the genesis block or load the previos data
+# Create the blockchain and add the genesis block or load the previos data from the pickle file if its not empty
 try:
      with open("users/save.p","rb") as pickle_in:
             blockchain = pickle.load(pickle_in)
