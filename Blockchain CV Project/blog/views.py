@@ -1,6 +1,15 @@
 from django.shortcuts import render
 #from .models import Post
 # Create your views here.
+'''
+This file is unused
+check the users folder for the correct views.py
+
+'''
+
+
+
+
 def home(request):
     context = {
         'posts': Post.objects.all()

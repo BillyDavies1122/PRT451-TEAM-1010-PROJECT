@@ -6,9 +6,8 @@
     "\\blog\\static\\blog",
     "\\blog\\templates",
     "\\users",
-    "\\users\\templates",
     "\\users\\templates\\users"
   ],
-  "SelectedNode": "\\blog\\static\\blog\\main.css",
+  "SelectedNode": "\\users\\views.py",
   "PreviewInSolutionExplorer": false
 }
