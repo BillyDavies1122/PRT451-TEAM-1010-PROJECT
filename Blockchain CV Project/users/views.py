@@ -282,7 +282,10 @@ def searchResumes(request):
                 if User.objects.filter(Q(fname=fname)&Q(sname=sname)):
                     users = User.objects.filter(Q(fname=fname)&Q(sname=sname))
                     args = {'users':users}
-            return render(request,'users/searchResume.html',args)
+                    return render(request,'users/searchResume.html',args)
+                else:
+                    form = searchForm()
+                    return render(request,'users/search.html',{'form':form})
         else:
             form = searchForm()
             return render(request,'users/search.html',{'form':form})

@@ -5,10 +5,10 @@
     "\\blog\\static",
     "\\blog\\static\\blog",
     "\\blog\\templates",
+    "\\django_project",
     "\\users",
-    "\\users\\templates",
-    "\\users\\templates\\users"
+    "\\users\\templates"
   ],
-  "SelectedNode": "\\blog\\static\\blog\\main.css",
+  "SelectedNode": "\\blog\\models.py",
   "PreviewInSolutionExplorer": false
 }
