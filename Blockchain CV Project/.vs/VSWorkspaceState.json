@@ -5,10 +5,16 @@
     "\\blog\\static",
     "\\blog\\static\\blog",
     "\\blog\\templates",
+<<<<<<< HEAD
     "\\django_project",
     "\\users",
     "\\users\\templates"
   ],
   "SelectedNode": "\\blog\\models.py",
+=======
+    "\\users"
+  ],
+  "SelectedNode": "\\blog\\tests.py",
+>>>>>>> 7f54b7743f03add4fa25827921d028e5c636e378
   "PreviewInSolutionExplorer": false
 }

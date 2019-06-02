@@ -12,6 +12,7 @@ Simply checks if the form is valid to the model in the blog folder
 then saves it
 if its a get request then it sends back the correct form to fill in
 check forms.py for the registration form
+Written by Billy Davies
 '''
 def register(request):
     if request.method == 'POST':
@@ -31,6 +32,7 @@ Otherwise it will check that the username and password are correct
 Uses the Q module to perform checks on the data
 Still needs to redirect to the correct page(employee,employer,education) on correct login
 Check forms.py for the login form
+Written by Billy Davies
 '''
 def login(request):
     if request.method =='POST':
@@ -76,6 +78,7 @@ def login(request):
 This view logs the user out
 deletes session data
 then redirects them to a page telling them they logged out
+Written by Billy Davies
 '''
 def logout(request):
     #mark session as modified so it can be deleted
@@ -95,7 +98,9 @@ Will allow a user to search for candidates with first name and last name
 Check forms.py for the form they search with
 
 If the request isnt a post it sends a simple form to the template
-if its a post request it gets the fname and sname elements and makes it lower case, then it  searches the database for anyone called that and sends a dict with all users it found to the template to be rendered
+if its a post request it gets the fname and sname elements and makes it lower case, 
+then it  searches the database for anyone called that and sends a dict with all users it found to the template to be rendered
+Written by Billy Davies
 '''
 def search(request):
     #checks permission
@@ -129,6 +134,7 @@ This function is used to write and save entries about a selected candidate
 It takes in a candidates id and a request
 If the user has permission and the request is not a POST it will first send  create a form to send to the template specified with the id of the candidate and the person entering already filled in
 When a user submits the form it then checks its valid and saves it. then it  redirects you  have to the search page
+Written by Billy Davies
 '''
 def displayCandidate(request,id):
     #check permissions
@@ -152,7 +158,9 @@ def displayCandidate(request,id):
 # edit_experience funtion
 '''
 This function allows a candidate to edit their information
-If the user has already added data about them , it edits that data. otherwise it creates an entry linked to their account with their extra details
+If the user has already added data about them , it edits that data. 
+otherwise it creates an entry linked to their account with their extra details
+Written by Billy Davies
 '''
 def edit_experience(request):
     if checkLoginStatus(request.session['id'],request.session['type'],'candidate') == True:
@@ -182,7 +190,7 @@ def edit_experience(request):
 '''
 This function checks if a user has any pending confirmations
 then can accept or deny them
-
+Written by Billy Davies
 '''
 
 def confirmation(request ,id=None):
@@ -208,6 +216,7 @@ def confirmation(request ,id=None):
 This function saves an entry
 it takes in the id of an entry
 then saves it to the blockchain using the blockAdd function
+Written by Billy Davies
 '''
 def saveEntry(request,id):
         #Creates a list object out of the needed entry
@@ -224,6 +233,7 @@ def saveEntry(request,id):
 
 '''
 Takes in an id and deletes the associated entry
+Written by Billy Davies
 '''
 def deleteEntry(id):
     dataEntry.objects.filter(id = id).delete()
@@ -231,6 +241,7 @@ def deleteEntry(id):
 '''
 displays all blocks in the chain
 not meant for use outside of demonstrations and trouble shooting
+Written by Billy Davies
 '''
 def displayBlock(request):
     args = {'item':blockchain}
@@ -240,7 +251,7 @@ def displayBlock(request):
 Function used to load logged in users resumes
 loops through the blockchain finding all relevant blocks
 then sends it to a template to be rendered
-
+Written by Billy Davies
 '''
 def loadResume(request):
     userRole = 'candidate'
@@ -270,6 +281,7 @@ def loadResume(request):
 '''
 Used to search through candidates as education and employer type user
 works the same as the other search function but its redirecting to a different page
+Written by Billy Davies
 '''
 def searchResumes(request):
     if checkLoginStatus(request.session['id'],request.session['type'],'employer') or checkLoginStatus(request.session['id'],request.session['type'],'education') == True:
@@ -285,10 +297,9 @@ def searchResumes(request):
                     return render(request,'users/searchResume.html',args)
                 else:
                     form = searchForm()
-                    return render(request,'users/search.html',{'form':form})
         else:
             form = searchForm()
-            return render(request,'users/search.html',{'form':form})
+        return render(request,'users/search.html',{'form':form})
     else:
         return render(request,'users/nopermission.html')
 
@@ -297,6 +308,7 @@ def searchResumes(request):
 used by employers and education to load a candidates resume
 Loops through the blockchain checking for the specified Id
 Sends a dict containing a list of lists to the template to be rendered
+Written by Billy Davies
 
 '''
 def loadCandidateResume(request,id):
@@ -405,6 +417,7 @@ def next_block(last_block,data):
 # Add blocks to the chain
 '''
 This function adds blocks passed through to it to the chain, then saves the blockchain using the pickle library to a file
+Written by Billy Davies
 '''
 def blockAdd(content,id):
     for i in range(0, 1):
