@@ -389,11 +389,14 @@ class Block:
         self.hash = self.hash_block()
 
     def hash_block(self):
+        #generate a sha256 hash
         sha = hasher.sha256()
+        #update hash object with items
         sha.update((str(self.index) +
             str(self.timestamp) +
             str(self.data) +
             str(self.previous_hash)).encode())
+        #return the hash as a string type
         return sha.hexdigest()
 
 def create_genesis_block():
